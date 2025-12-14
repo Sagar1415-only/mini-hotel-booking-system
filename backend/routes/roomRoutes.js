@@ -9,18 +9,17 @@ router.get("/", async (req, res) => {
   res.json(rooms);
 });
 
-/* Check room availability */
+/* Get available rooms (CORRECT LOGIC) */
 router.get("/available", async (req, res) => {
   const { checkIn, checkOut } = req.query;
 
-  const bookings = await Booking.find({
-    $or: [
-      { checkOut: { $lte: new Date(checkIn) } },
-      { checkIn: { $gte: new Date(checkOut) } }
-    ]
+  const overlappingBookings = await Booking.find({
+    checkIn: { $lt: new Date(checkOut) },
+    checkOut: { $gt: new Date(checkIn) }
   });
 
-  const bookedRoomIds = bookings.map(b => b.roomId.toString());
+  const bookedRoomIds = overlappingBookings.map(b => b.roomId);
+
   const availableRooms = await Room.find({
     _id: { $nin: bookedRoomIds }
   });
