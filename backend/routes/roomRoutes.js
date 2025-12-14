@@ -1,24 +1,40 @@
+const express = require("express");
+const router = express.Router();
+const Room = require("../models/Room");
+const Booking = require("../models/Booking");
+
+/* ✅ availability FIRST */
 router.get("/available", async (req, res) => {
   const { checkIn, checkOut } = req.query;
 
-  // 1. Find overlapping bookings
   const overlappingBookings = await Booking.find({
     checkIn: { $lt: new Date(checkOut) },
     checkOut: { $gt: new Date(checkIn) }
   });
 
-  // 2. Convert roomIds properly
   const bookedRoomIds = overlappingBookings.map(
     b => b.roomId.toString()
   );
 
-  // 3. Fetch all rooms
   const allRooms = await Room.find();
 
-  // 4. Manually filter unavailable rooms (SAFE & CLEAR)
   const availableRooms = allRooms.filter(
     room => !bookedRoomIds.includes(room._id.toString())
   );
 
   res.json(availableRooms);
 });
+
+/* all rooms */
+router.get("/", async (req, res) => {
+  const rooms = await Room.find();
+  res.json(rooms);
+});
+
+/* ❗ this MUST be LAST */
+router.get("/:id", async (req, res) => {
+  const room = await Room.findById(req.params.id);
+  res.json(room);
+});
+
+module.exports = router;
