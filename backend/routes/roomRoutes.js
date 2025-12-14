@@ -1,22 +1,14 @@
-const express = require("express");
-const router = express.Router();
-const Room = require("../models/Room");
-const Booking = require("../models/Booking");
-
-/* Get all rooms */
-router.get("/", async (req, res) => {
-  const rooms = await Room.find();
-  res.json(rooms);
-});
-
-/* Get available rooms (CORRECT LOGIC) */
 router.get("/available", async (req, res) => {
   const { checkIn, checkOut } = req.query;
 
+  console.log("CHECK:", checkIn, checkOut);
+
   const overlappingBookings = await Booking.find({
-    checkIn: { $lt: new Date(checkOut) },
-    checkOut: { $gt: new Date(checkIn) }
+    checkIn: { $lte: new Date(checkOut) },
+    checkOut: { $gte: new Date(checkIn) }
   });
+
+  console.log("OVERLAPS:", overlappingBookings);
 
   const bookedRoomIds = overlappingBookings.map(b => b.roomId);
 
@@ -26,5 +18,3 @@ router.get("/available", async (req, res) => {
 
   res.json(availableRooms);
 });
-
-module.exports = router;
