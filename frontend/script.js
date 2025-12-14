@@ -1,40 +1,72 @@
 const API = "http://localhost:3000";
 
-/* Check availability */
+/* Check room availability */
 function checkAvailability() {
   const checkIn = document.getElementById("checkIn").value;
   const checkOut = document.getElementById("checkOut").value;
 
+  if (!checkIn || !checkOut) {
+    alert("Please select both dates");
+    return;
+  }
+
   fetch(`${API}/rooms/available?checkIn=${checkIn}&checkOut=${checkOut}`)
     .then(res => res.json())
-    .then(data => {
-      let html = "";
-      data.forEach(room => {
-        html += `<p>Room ${room.roomNumber} 
-        <button onclick="selectRoom('${room._id}')">Book</button></p>`;
+    .then(rooms => {
+      const container = document.getElementById("rooms");
+      container.innerHTML = "";
+
+      if (rooms.length === 0) {
+        container.innerHTML = "<p>No rooms available</p>";
+        return;
+      }
+
+      rooms.forEach(room => {
+        const div = document.createElement("div");
+        div.innerHTML = `
+          <p>
+            Room ${room.roomNumber} (${room.type}) - ₹${room.price}
+            <button onclick="selectRoom('${room._id}', '${checkIn}', '${checkOut}')">
+              Book
+            </button>
+          </p>
+        `;
+        container.appendChild(div);
       });
-      document.getElementById("rooms").innerHTML = html;
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Error fetching rooms");
     });
 }
 
-function selectRoom(id) {
-  localStorage.setItem("roomId", id);
+/* Store selected room and dates */
+function selectRoom(roomId, checkIn, checkOut) {
+  localStorage.setItem("roomId", roomId);
+  localStorage.setItem("checkIn", checkIn);
+  localStorage.setItem("checkOut", checkOut);
   window.location.href = "booking.html";
 }
 
+/* Book room */
 function bookRoom() {
   const booking = {
     roomId: localStorage.getItem("roomId"),
     customerName: document.getElementById("name").value,
-    checkIn: new Date(),
-    checkOut: new Date()
+    checkIn: localStorage.getItem("checkIn"),
+    checkOut: localStorage.getItem("checkOut")
   };
 
   fetch(`${API}/bookings`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(booking)
-  }).then(() => alert("Booked!"));
+  })
+    .then(res => res.json())
+    .then(() => {
+      alert("Booked!");
+      localStorage.clear();
+    });
 }
 
 /* Admin view */
@@ -42,10 +74,13 @@ if (window.location.pathname.includes("admin")) {
   fetch(`${API}/bookings`)
     .then(res => res.json())
     .then(data => {
-      let html = "";
+      const container = document.getElementById("bookings");
+      container.innerHTML = "";
+
       data.forEach(b => {
-        html += `<p>${b.customerName} - Room ${b.roomId.roomNumber}</p>`;
+        const p = document.createElement("p");
+        p.innerText = `${b.customerName} - Room ${b.roomId.roomNumber}`;
+        container.appendChild(p);
       });
-      document.getElementById("bookings").innerHTML = html;
     });
 }
