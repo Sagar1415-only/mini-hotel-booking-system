@@ -5,6 +5,7 @@ const Room = require("../models/Room");
 const Booking = require("../models/Booking");
 
 /* ✅ availability FIRST */
+console.log("AVAILABLE ROUTE EXECUTED");
 router.get("/available", async (req, res) => {
   const { checkIn, checkOut } = req.query;
 
