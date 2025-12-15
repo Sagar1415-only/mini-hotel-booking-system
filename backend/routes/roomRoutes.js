@@ -1,3 +1,4 @@
+console.log("ROOM ROUTES FILE LOADED");
 const express = require("express");
 const router = express.Router();
 const Room = require("../models/Room");
