@@ -4,51 +4,21 @@ const Booking = require("../models/Booking");
 
 /* CREATE booking */
 router.post("/", async (req, res) => {
-  const booking = new Booking({
-    roomId: req.body.roomId,
-    customerName: req.body.customerName,
-    checkIn: new Date(req.body.checkIn),
-    checkOut: new Date(req.body.checkOut)
-  });
-
+  const booking = new Booking(req.body);
   await booking.save();
   res.json({ message: "Room booked successfully" });
 });
-const USER_COINS = 1000;
 
-router.post("/", async (req, res) => {
-  const room = await Room.findById(req.body.roomId);
-  if (!room) return res.status(404).json({ message: "Room not found" });
-
-  if (USER_COINS < room.price) {
-    return res.status(400).json({ message: "Insufficient coins" });
-  }
-
-  const booking = new Booking(req.body);
-  await booking.save();
-
-  res.json({ message: `Booked! ${room.price} coins deducted` });
-});
-
-
-/* VIEW bookings */
+/* GET all bookings */
 router.get("/", async (req, res) => {
   const bookings = await Booking.find().populate("roomId");
   res.json(bookings);
 });
 
+/* DELETE booking */
 router.delete("/:id", async (req, res) => {
-  const booking = await Booking.findById(req.params.id);
-  if (!booking) return res.json({ message: "Booking not found" });
-
-  const diff = (Date.now() - booking.createdAt) / (1000 * 60);
-
-  if (diff > 60) {
-    return res.status(403).json({
-      message: "Cancellation allowed only within 1 hour"
-    });
-  }
-
-  await booking.deleteOne();
-  res.json({ message: "Booking cancelled successfully" });
+  await Booking.findByIdAndDelete(req.params.id);
+  res.json({ message: "Booking cancelled" });
 });
+
+module.exports = router;
