@@ -1,5 +1,19 @@
 const mongoose = require("mongoose");
 
+const guestSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true
+    },
+    age: {
+      type: Number,
+      required: true
+    }
+  },
+  { _id: false }
+);
+
 const bookingSchema = new mongoose.Schema(
   {
     roomId: {
@@ -13,13 +27,13 @@ const bookingSchema = new mongoose.Schema(
       required: true
     },
 
-    customerAge: {
+    bedsRequired: {
       type: Number,
       required: true
     },
 
-    bedsRequired: {
-      type: Number,
+    guests: {
+      type: [guestSchema],
       required: true
     },
 
@@ -33,11 +47,12 @@ const bookingSchema = new mongoose.Schema(
       required: true
     },
 
+    totalAmount: {
+      type: Number,
+      required: true
+    },
+
     payment: {
-      amount: {
-        type: Number,
-        required: true
-      },
       method: {
         type: String,
         default: "VirtualCoins"
@@ -47,6 +62,11 @@ const bookingSchema = new mongoose.Schema(
         default: "Paid"
       }
     },
+    walletOwner: {
+  type: String,
+  required: true
+},
+
 
     status: {
       type: String,
@@ -54,7 +74,7 @@ const bookingSchema = new mongoose.Schema(
     }
   },
   {
-    timestamps: true   // 🔥 VERY IMPORTANT
+    timestamps: true   // ✅ creates createdAt & updatedAt automatically
   }
 );
 
