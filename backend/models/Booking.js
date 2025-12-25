@@ -14,6 +14,10 @@ const bookingSchema = new mongoose.Schema({
   checkOut: {
     type: Date,
     required: true
+  },
+  status: {
+    type: String,
+    default: "Booked"
   }
 });
 
