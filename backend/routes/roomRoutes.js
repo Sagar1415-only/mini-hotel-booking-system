@@ -1,45 +1,38 @@
-console.log("ROOM ROUTES FILE LOADED");
 const express = require("express");
 const router = express.Router();
 const Room = require("../models/Room");
 const Booking = require("../models/Booking");
 
-/* ✅ availability FIRST */
-console.log("AVAILABLE ROUTE EXECUTED");
-router.get("/available", async (req, res) => {
-  const { checkIn, checkOut } = req.query;
-
-  const overlappingBookings = await Booking.find({
-    checkIn: { $lt: new Date(checkOut) },
-    checkOut: { $gt: new Date(checkIn) }
-  });
-
-  const bookedRoomIds = overlappingBookings.map(b =>
-    b.roomId._id
-      ? b.roomId._id.toString()
-      : b.roomId.toString()
-  );
-
-  const allRooms = await Room.find();
-
-  const availableRooms = allRooms.filter(
-    room => !bookedRoomIds.includes(room._id.toString())
-  );
-
-  res.json(availableRooms);
-});
-
-
-/* all rooms */
+/* GET all rooms */
 router.get("/", async (req, res) => {
   const rooms = await Room.find();
   res.json(rooms);
 });
 
-/* ❗ this MUST be LAST */
-router.get("/:id", async (req, res) => {
-  const room = await Room.findById(req.params.id);
-  res.json(room);
+/* GET available rooms (FINAL CORRECT LOGIC) */
+router.get("/available", async (req, res) => {
+  const { checkIn, checkOut } = req.query;
+
+  const start = new Date(checkIn);
+  const end = new Date(checkOut);
+
+  // 1️⃣ Find bookings that overlap
+  const overlappingBookings = await Booking.find({
+    checkIn: { $lt: end },
+    checkOut: { $gt: start }
+  });
+
+  // 2️⃣ Extract booked room IDs (SAFE for populated or not)
+  const bookedRoomIds = overlappingBookings.map(b =>
+    b.roomId.toString()
+  );
+
+  // 3️⃣ Exclude booked rooms
+  const availableRooms = await Room.find({
+    _id: { $nin: bookedRoomIds }
+  });
+
+  res.json(availableRooms);
 });
 
 module.exports = router;
