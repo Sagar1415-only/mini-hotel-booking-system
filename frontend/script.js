@@ -48,33 +48,32 @@ async function bookRoom(roomId) {
   const checkIn = document.getElementById("checkIn").value;
   const checkOut = document.getElementById("checkOut").value;
 
-  if (!checkIn || !checkOut) {
-    alert("Select dates first");
+  const name = prompt("Enter your name:");
+  const age = prompt("Enter your age:");
+  const beds = prompt("Beds required:");
+
+  if (!name || !age || !beds) {
+    alert("All details required");
     return;
   }
 
-  const customerName = prompt("Enter your name:");
-  if (!customerName) return;
+  const response = await fetch("http://localhost:3000/bookings", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      roomId,
+      customerName: name,
+      age,
+      beds,
+      checkIn,
+      checkOut
+    })
+  });
 
-  try {
-    const response = await fetch("http://localhost:3000/bookings", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        roomId,
-        customerName,
-        checkIn,
-        checkOut
-      })
-    });
-
-    const result = await response.json();
-    alert(result.message);
-
-    // Refresh availability after booking
-    checkAvailability();
+  const result = await response.json();
+  alert(result.message);
+  checkAvailability();
+}
 
   } catch (error) {
     console.error(error);
