@@ -1,7 +1,6 @@
 async function checkAvailability() {
   const checkIn = document.getElementById("checkIn").value;
   const checkOut = document.getElementById("checkOut").value;
-  const beds = document.getElementById("beds").value;
 
   if (!checkIn || !checkOut) {
     alert("Please select dates");
@@ -12,13 +11,7 @@ async function checkAvailability() {
     `http://localhost:3000/rooms/available?checkIn=${checkIn}&checkOut=${checkOut}`
   );
 
-  let rooms = await res.json();
-
-  // Filter by beds if entered
-  if (beds) {
-    rooms = rooms.filter(r => r.capacity >= beds);
-  }
-
+  const rooms = await res.json();
   const container = document.getElementById("rooms");
   container.innerHTML = "";
 
@@ -32,10 +25,9 @@ async function checkAvailability() {
     div.className = "room-card";
 
     div.innerHTML = `
-      <h3>Room ${room.roomNumber}</h3>
-      <p>Type: ${room.type}</p>
-      <p>Beds: ${room.capacity}</p>
+      <h3>Room ${room.roomNumber} (${room.type})</h3>
       <p>Price: ₹${room.price}</p>
+      <p>Capacity: ${room.capacity} people</p>
       <button onclick="bookRoom('${room._id}')">Book Now</button>
     `;
 
@@ -45,17 +37,12 @@ async function checkAvailability() {
 
 async function bookRoom(roomId) {
   const name = prompt("Enter your name:");
-  const age = prompt("Enter your age:");
-
-  if (!name || !age) {
-    alert("Details required");
-    return;
-  }
+  if (!name) return;
 
   const checkIn = document.getElementById("checkIn").value;
   const checkOut = document.getElementById("checkOut").value;
 
-  const res = await fetch("http://localhost:3000/bookings", {
+  await fetch("http://localhost:3000/bookings", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -66,6 +53,6 @@ async function bookRoom(roomId) {
     })
   });
 
-  const data = await res.json();
-  alert(data.message || "Booked!");
+  alert("Room booked successfully!");
+  checkAvailability();
 }
