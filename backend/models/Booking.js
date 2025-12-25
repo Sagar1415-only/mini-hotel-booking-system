@@ -3,14 +3,17 @@ const mongoose = require("mongoose");
 const bookingSchema = new mongoose.Schema({
   roomId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Room"
+    ref: "Room",
+    required: true
   },
   customerName: String,
-  checkIn: Date,
-  checkOut: Date,
-  status: {
-    type: String,
-    default: "Booked"
+  checkIn: {
+    type: Date,
+    required: true
+  },
+  checkOut: {
+    type: Date,
+    required: true
   }
 });
 
