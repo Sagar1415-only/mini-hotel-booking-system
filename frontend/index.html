@@ -1,17 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Hotel Rooms</title>
+  <meta charset="UTF-8">
+  <title>Hotel Booking</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <h2>Check Room Availability</h2>
 
-  <input type="date" id="checkIn">
-  <input type="date" id="checkOut">
-  <button onclick="checkAvailability()">Check</button>
+  <header class="header">
+    <h1>🏨 Hotel Booking System</h1>
+    <p>Find & book rooms instantly</p>
+  </header>
 
-  <div id="rooms"></div>
+  <section class="search-box">
+    <div class="field">
+      <label>Check-In</label>
+      <input type="date" id="checkIn">
+    </div>
+
+    <div class="field">
+      <label>Check-Out</label>
+      <input type="date" id="checkOut">
+    </div>
+
+    <div class="field">
+      <label>Beds Required</label>
+      <input type="number" id="beds" min="1" placeholder="e.g. 2">
+    </div>
+
+    <button class="search-btn" onclick="checkAvailability()">
+      Check Availability
+    </button>
+  </section>
+
+  <section>
+    <h2 class="section-title">Available Rooms</h2>
+    <div id="rooms" class="rooms-grid"></div>
+  </section>
 
   <script src="script.js"></script>
 </body>
