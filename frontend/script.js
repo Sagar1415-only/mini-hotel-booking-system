@@ -1,82 +1,71 @@
 async function checkAvailability() {
   const checkIn = document.getElementById("checkIn").value;
   const checkOut = document.getElementById("checkOut").value;
-  const roomsDiv = document.getElementById("rooms");
-
-  // Clear previous results
-  roomsDiv.innerHTML = "";
+  const beds = document.getElementById("beds").value;
 
   if (!checkIn || !checkOut) {
-    roomsDiv.innerHTML = "<p>Please select both dates.</p>";
+    alert("Please select dates");
     return;
   }
 
-  try {
-    const response = await fetch(
-      `http://localhost:3000/rooms/available?checkIn=${checkIn}&checkOut=${checkOut}`
-    );
+  const res = await fetch(
+    `http://localhost:3000/rooms/available?checkIn=${checkIn}&checkOut=${checkOut}`
+  );
 
-    const rooms = await response.json();
+  let rooms = await res.json();
 
-    if (rooms.length === 0) {
-      roomsDiv.innerHTML = "<p>No rooms available for selected dates.</p>";
-      return;
-    }
-
-    rooms.forEach(room => {
-      const roomCard = document.createElement("div");
-      roomCard.className = "room-card";
-
-      roomCard.innerHTML = `
-        <h3>Room ${room.roomNumber}</h3>
-        <p>Type: ${room.type}</p>
-        <p>Price: ₹${room.price}</p>
-        <p>Capacity: ${room.capacity}</p>
-        <button onclick="bookRoom('${room._id}')">Book</button>
-      `;
-
-      roomsDiv.appendChild(roomCard);
-    });
-
-  } catch (error) {
-    console.error(error);
-    roomsDiv.innerHTML = "<p>Error fetching rooms.</p>";
+  // Filter by beds if entered
+  if (beds) {
+    rooms = rooms.filter(r => r.capacity >= beds);
   }
+
+  const container = document.getElementById("rooms");
+  container.innerHTML = "";
+
+  if (rooms.length === 0) {
+    container.innerHTML = "<p>No rooms available</p>";
+    return;
+  }
+
+  rooms.forEach(room => {
+    const div = document.createElement("div");
+    div.className = "room-card";
+
+    div.innerHTML = `
+      <h3>Room ${room.roomNumber}</h3>
+      <p>Type: ${room.type}</p>
+      <p>Beds: ${room.capacity}</p>
+      <p>Price: ₹${room.price}</p>
+      <button onclick="bookRoom('${room._id}')">Book Now</button>
+    `;
+
+    container.appendChild(div);
+  });
 }
 
 async function bookRoom(roomId) {
-  const checkIn = document.getElementById("checkIn").value;
-  const checkOut = document.getElementById("checkOut").value;
-
   const name = prompt("Enter your name:");
   const age = prompt("Enter your age:");
-  const beds = prompt("Beds required:");
 
-  if (!name || !age || !beds) {
-    alert("All details required");
+  if (!name || !age) {
+    alert("Details required");
     return;
   }
 
-  const response = await fetch("http://localhost:3000/bookings", {
+  const checkIn = document.getElementById("checkIn").value;
+  const checkOut = document.getElementById("checkOut").value;
+
+  const res = await fetch("http://localhost:3000/bookings", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       roomId,
       customerName: name,
-      age,
-      beds,
       checkIn,
       checkOut
     })
   });
 
-  const result = await response.json();
-  alert(result.message);
-  checkAvailability();
-}
-
-  } catch (error) {
-    console.error(error);
-    alert("Booking failed");
-  }
+  const data = await res.json();
+  alert(data.message || "Booked!");
 }
