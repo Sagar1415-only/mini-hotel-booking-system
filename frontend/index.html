@@ -1,17 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Hotel Rooms</title>
+  <meta charset="UTF-8">
+  <title>Mini Hotel Booking</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h2>Check Room Availability</h2>
 
-  <input type="date" id="checkIn">
-  <input type="date" id="checkOut">
-  <button onclick="checkAvailability()">Check</button>
+  <header>
+    <h1>🏨 Mini Hotel Booking</h1>
+    <p>Find and book your perfect stay</p>
+  </header>
 
-  <div id="rooms"></div>
+  <section class="search">
+    <input type="date" id="checkIn">
+    <input type="date" id="checkOut">
+    <input type="number" id="beds" placeholder="Beds required" min="1">
+    <button onclick="checkAvailability()">Check Availability</button>
+  </section>
+
+  <section id="rooms" class="rooms"></section>
 
   <script src="./script.js"></script>
 </body>
