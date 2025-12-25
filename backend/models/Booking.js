@@ -6,7 +6,10 @@ const bookingSchema = new mongoose.Schema({
     ref: "Room",
     required: true
   },
-  customerName: String,
+  customerName: {
+    type: String,
+    required: true
+  },
   checkIn: {
     type: Date,
     required: true
