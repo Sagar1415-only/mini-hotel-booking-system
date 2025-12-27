@@ -1,25 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Hotel Booking</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
+<input id="checkIn" type="date">
+<input id="checkOut" type="date">
+<input id="beds" type="number" placeholder="Beds">
+<button onclick="go()">Search</button>
 
-  <header>
-    <h1>🏨 Mini Hotel Booking</h1>
-    <p>Find and book rooms easily</p>
-  </header>
-
-  <section class="search">
-    <input type="date" id="checkIn">
-    <input type="date" id="checkOut">
-    <button onclick="checkAvailability()">Check Availability</button>
-  </section>
-
-  <section id="rooms" class="rooms"></section>
-
-  <script src="script.js"></script>
-</body>
-</html>
+<script>
+function go() {
+  location.href = `rooms.html?checkIn=${checkIn.value}&checkOut=${checkOut.value}&beds=${beds.value}`;
+}
+</script>
