@@ -39,7 +39,7 @@ async function loadRooms() {
 
       card.innerHTML = `
         <h3>Room ${room.roomNumber} (${room.type})</h3>
-        <p>Price: ₹${room.price} / night</p>
+        <p>Price: \u20B9${room.price} / night</p>
         <p>Capacity: ${room.capacity} beds</p>
         <button onclick="bookRoom('${room._id}', ${room.price})">
           Book

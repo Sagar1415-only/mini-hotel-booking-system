@@ -1,10 +1,77 @@
-<input id="checkIn" type="date">
-<input id="checkOut" type="date">
-<input id="beds" type="number" placeholder="Beds">
-<button onclick="go()">Search</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hotel Booking</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 
+<body class="landing">
+
+<!-- ===== TOP BAR ===== -->
+<div class="top-bar">
+  <span class="brand">HotelEase</span>
+
+  <div class="top-actions">
+    <button class="link-btn" onclick="goToMyBookings()">My Bookings</button>
+    <button class="admin-btn" onclick="adminLogin()">Admin</button>
+  </div>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero-premium">
+  <div class="hero-text">
+    <h1>Find Your Perfect Stay</h1>
+    <p>
+      Hand-picked rooms • Seamless booking • Trusted comfort
+    </p>
+  </div>
+
+  <!-- ===== SEARCH CARD ===== -->
+  <div class="search-premium">
+
+    <div class="field">
+      <label>Check-in</label>
+      <input id="checkIn" type="date">
+    </div>
+
+    <div class="field">
+      <label>Check-out</label>
+      <input id="checkOut" type="date">
+    </div>
+
+    <div class="field">
+      <label>Beds</label>
+      <input id="beds" type="number" placeholder="Guests / Beds">
+    </div>
+
+    <button onclick="go()" class="primary-cta">
+      Search Rooms
+    </button>
+
+  </div>
+</section>
+
+<!-- ===== LOGIC ===== -->
 <script>
 function go() {
-  location.href = `rooms.html?checkIn=${checkIn.value}&checkOut=${checkOut.value}&beds=${beds.value}`;
+  location.href =
+    `rooms.html?checkIn=${checkIn.value}&checkOut=${checkOut.value}&beds=${beds.value}`;
+}
+
+function adminLogin() {
+  const password = prompt("Enter admin password");
+  if (password === "admin123") {
+    window.location.href = "admin.html";
+  } else {
+    alert("Incorrect password");
+  }
+}
+
+function goToMyBookings() {
+  window.location.href = "login.html";
 }
 </script>
+
+</body>
+</html>

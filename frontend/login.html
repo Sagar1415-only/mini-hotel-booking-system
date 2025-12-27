@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h2>Customer Login</h2>
+</header>
+
+<div class="booking-container">
+  <input id="name" placeholder="Booking Name">
+  <input id="password" type="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+</div>
+
+<script>
+function login() {
+  const name = document.getElementById("name").value.trim();
+  const pass = document.getElementById("password").value;
+
+  if (!name) {
+    alert("Enter booking name");
+    return;
+  }
+
+  // 🔐 fixed password rule
+  if (pass === name + "1232") {
+    localStorage.setItem("customerName", name);
+    window.location.href = "my-bookings.html";
+  } else {
+    alert("Invalid credentials");
+  }
+}
+</script>
+
+</body>
+</html>

@@ -13,10 +13,15 @@ router.get("/:owner", async (req, res) => {
     let wallet = await Wallet.findOne({ owner });
 
     // 🧠 Auto-create wallet if not exists
-    if (!wallet) {
-      wallet = new Wallet({ owner });
-      await wallet.save();
-    }
+  if (!wallet) {
+  wallet = new Wallet({
+    owner,
+    balance: 5000   // 👈 default initial coins
+  });
+  await wallet.save();
+}
+
+
 
     res.json(wallet);
   } catch (err) {

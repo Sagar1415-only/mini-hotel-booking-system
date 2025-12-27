@@ -56,6 +56,7 @@ function collectGuests() {
 // ➡️ Proceed to payment
 function proceedToPayment() {
   const customerName = document.getElementById("customerName").value.trim();
+   localStorage.setItem("customerName", customerName);
 
   if (!customerName) {
     alert("Enter booking name");

@@ -5,6 +5,20 @@ const Wallet = require("../models/Wallet");
 const router = express.Router();
 
 /* =========================
+   GET ALL BOOKINGS (ADMIN)
+========================= */
+router.get("/", async (req, res) => {
+  try {
+    const bookings = await Booking.find()
+      .populate("roomId"); // optional but very useful
+
+    res.json(bookings);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+/* =========================
    CREATE BOOKING + PAY
 ========================= */
 router.post("/", async (req, res) => {
@@ -80,28 +94,48 @@ router.post("/", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const booking = await Booking.findById(req.params.id);
-    if (!booking) return res.sendStatus(404);
 
-    // ⏱ Time check
-    if (Date.now() - booking.createdAt > 60 * 60 * 1000) {
-      return res.status(403).json({ message: "Too late to cancel" });
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found" });
     }
 
-    // 💰 Refund
-    let wallet = await Wallet.findOne({ owner: booking.walletOwner });
-    if (wallet) {
-      wallet.balance += booking.totalAmount;
-      await wallet.save();
+    const isAdmin = req.query.admin === "true";
+
+    // 👤 USER RULE: can cancel only within 1 hour
+    if (!isAdmin) {
+      const bookingTime = new Date(booking.createdAt);
+      const now = new Date();
+
+      const diffInMinutes = (now - bookingTime) / (1000 * 60);
+
+      if (diffInMinutes > 60) {
+        return res.status(403).json({
+          message: "Cancellation allowed only within 1 hour"
+        });
+      }
     }
 
-    await booking.deleteOne();
+    // 🧑‍💼 ADMIN: can cancel anytime
+    await Booking.findByIdAndDelete(req.params.id);
 
-    res.json({ message: "Cancelled & refunded" });
+    res.json({
+      message: isAdmin
+        ? "Booking cancelled by admin"
+        : "Booking cancelled successfully"
+    });
 
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Failed to cancel booking" });
   }
 });
+router.get("/user/:name", async (req, res) => {
+  const bookings = await Booking.find({
+    customerName: req.params.name
+  });
+  res.json(bookings);
+});
+
+
+
 
 module.exports = router;

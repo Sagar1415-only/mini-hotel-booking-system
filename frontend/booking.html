@@ -1,4 +1,37 @@
-<input id="customerName" placeholder="Booking name">
-<div id="guests"></div>
-<button onclick="proceedToPayment()">Continue to Payment</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Guest Details</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="booking-page">
+
+<header>
+  <h2>Guest Details</h2>
+</header>
+
+<div class="booking-container">
+
+  <!-- Booking Name -->
+  <div class="main-field">
+    <label>Booking Name</label>
+    <input id="customerName" placeholder="Enter booking name">
+  </div>
+
+  <!-- Guests will be injected here by booking.js -->
+  <div id="guests"></div>
+
+  <!-- Continue Button -->
+  <button onclick="proceedToPayment()" class="primary-btn">
+    Continue to Payment
+  </button>
+
+</div>
+
+<!-- JS (ONLY ONCE) -->
 <script src="script/booking.js"></script>
+
+</body>
+</html>

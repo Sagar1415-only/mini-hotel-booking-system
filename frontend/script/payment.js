@@ -35,7 +35,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const wallet = await res.json();
 
   document.getElementById("walletText").innerText =
-    `Wallet Balance: ₹${wallet.balance}`;
+    `Wallet Balance: \u20B9${Number(wallet.balance).toLocaleString("en-IN")}
+`;
 });
 
 
