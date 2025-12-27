@@ -1,8 +1,15 @@
 const mongoose = require("mongoose");
 
 const walletSchema = new mongoose.Schema({
-  owner: String,
-  balance: { type: Number, default: 10000 } // virtual coins
-});
+  owner: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  balance: {
+    type: Number,
+    default: 10000 // ✅ initial virtual coins
+  }
+}, { timestamps: true });
 
 module.exports = mongoose.model("Wallet", walletSchema);
