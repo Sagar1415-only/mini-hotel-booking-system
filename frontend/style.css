@@ -1,6 +1,5 @@
-/* =====================
-   GLOBAL RESET
-===================== */
+
+
 * {
   box-sizing: border-box;
 }
@@ -12,9 +11,7 @@ body {
   color: #1e293b;
 }
 
-/* =====================
-   HEADER
-===================== */
+
 header {
   background: linear-gradient(135deg, #0f172a, #1e293b);
   color: white;
@@ -29,9 +26,7 @@ header h2 {
   letter-spacing: 0.5px;
 }
 
-/* =====================
-   SEARCH / FORM SECTIONS
-===================== */
+
 .search, .form {
   display: flex;
   gap: 15px;
@@ -46,9 +41,7 @@ header h2 {
   box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
-/* =====================
-   INPUTS & BUTTONS
-===================== */
+
 input {
   padding: 12px 14px;
   font-size: 15px;
@@ -80,9 +73,6 @@ button:hover {
   box-shadow: 0 6px 14px rgba(37,99,235,0.35);
 }
 
-/* =====================
-   ROOMS GRID
-===================== */
 .rooms {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -92,9 +82,7 @@ button:hover {
   margin: auto;
 }
 
-/* =====================
-   ROOM CARD
-===================== */
+
 .room-card {
   background: white;
   padding: 20px;
@@ -123,9 +111,7 @@ button:hover {
   font-size: 14px;
 }
 
-/* =====================
-   CONTAINER (BOOKING / PAYMENT)
-===================== */
+
 .container, .payment-box {
   max-width: 520px;
   margin: 40px auto;
@@ -140,9 +126,7 @@ button:hover {
   margin-bottom: 14px;
 }
 
-/* =====================
-   GUEST CARDS
-===================== */
+
 .guest-card {
   margin-bottom: 18px;
   padding: 14px;
@@ -157,16 +141,12 @@ button:hover {
   margin-top: 8px;
 }
 
-/* =====================
-   ADMIN DASHBOARD
-===================== */
+
 #bookings .room-card {
   border-left: 5px solid #0ea5e9;
 }
 
-/* =====================
-   ADMIN LOGIN BUTTON
-===================== */
+
 #adminBtn {
   box-shadow: 0 6px 15px rgba(0,0,0,0.35);
 }
@@ -175,9 +155,6 @@ button:hover {
   background: linear-gradient(135deg, #1e40af, #1d4ed8);
 }
 
-/* =====================
-   RESPONSIVE
-===================== */
 @media (max-width: 600px) {
   header h2 {
     font-size: 20px;
@@ -195,14 +172,14 @@ button:hover {
     width: 100%;
   }
 }
-/* ===== HERO TEXT ===== */
+
 .subtitle {
   margin-top: 6px;
   font-size: 14px;
   color: #cbd5f5;
 }
 
-/* ===== SEARCH CARD ===== */
+
 .search-card {
   max-width: 900px;
   margin: -40px auto 40px;
@@ -216,7 +193,7 @@ button:hover {
   align-items: end;
 }
 
-/* ===== FIELD ===== */
+
 .field {
   display: flex;
   flex-direction: column;
@@ -229,7 +206,6 @@ button:hover {
   color: #475569;
 }
 
-/* ===== SEARCH BUTTON ===== */
 .search-btn {
   height: 48px;
   background: linear-gradient(135deg, #0ea5e9, #2563eb);
@@ -238,7 +214,7 @@ button:hover {
   font-weight: 600;
 }
 
-/* ===== ADMIN BUTTON ===== */
+
 #adminBtn {
   position: fixed;
   top: 15px;
@@ -251,9 +227,7 @@ button:hover {
   cursor: pointer;
   box-shadow: 0 6px 15px rgba(0,0,0,0.35);
 }
-/* =====================
-   LANDING PAGE
-===================== */
+
 body.landing {
   margin: 0;
   font-family: "Segoe UI", system-ui, sans-serif;
@@ -262,9 +236,8 @@ body.landing {
   overflow-x: hidden;
 }
 
-/* =====================
-   HERO
-===================== */
+
+
 .hero {
   height: 75vh;
   background: linear-gradient(
@@ -289,9 +262,7 @@ body.landing {
   color: #cbd5f5;
 }
 
-/* =====================
-   GLASS SEARCH CARD
-===================== */
+
 .search-glass {
   max-width: 900px;
   margin: -90px auto 60px;
@@ -306,9 +277,6 @@ body.landing {
   box-shadow: 0 40px 80px rgba(0,0,0,0.4);
 }
 
-/* =====================
-   INPUT FIELDS
-===================== */
 .field {
   display: flex;
   flex-direction: column;
@@ -329,9 +297,6 @@ body.landing {
   background: rgba(255,255,255,0.9);
 }
 
-/* =====================
-   SEARCH BUTTON
-===================== */
 .search-btn {
   height: 52px;
   font-size: 16px;
@@ -349,9 +314,7 @@ body.landing {
   transform: translateY(-3px);
 }
 
-/* =====================
-   ADMIN BUTTON
-===================== */
+
 #adminBtn {
   position: fixed;
   top: 18px;
@@ -365,9 +328,6 @@ body.landing {
   backdrop-filter: blur(8px);
 }
 
-/* =====================
-   MOBILE
-===================== */
 @media (max-width: 600px) {
   .hero-content h1 {
     font-size: 34px;
@@ -378,16 +338,12 @@ body.landing {
     grid-template-columns: 1fr;
   }
 }
-/* =====================
-   BOOKING PAGE
-===================== */
+
 body.booking-page {
   background: #f8fafc;
 }
 
-/* =====================
-   BOOKING CONTAINER
-===================== */
+
 .booking-container {
   max-width: 650px;
   margin: 40px auto;
@@ -397,9 +353,7 @@ body.booking-page {
   box-shadow: 0 25px 50px rgba(0,0,0,0.12);
 }
 
-/* =====================
-   MAIN FIELD
-===================== */
+
 .main-field {
   margin-bottom: 25px;
 }
@@ -412,9 +366,7 @@ body.booking-page {
   margin-bottom: 6px;
 }
 
-/* =====================
-   GUEST CARD (JS GENERATED)
-===================== */
+
 .guest-card {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -426,9 +378,7 @@ body.booking-page {
   border-left: 4px solid #2563eb;
 }
 
-/* =====================
-   INPUTS
-===================== */
+
 .booking-container input {
   padding: 12px;
   font-size: 14px;
@@ -442,9 +392,6 @@ body.booking-page {
   border-color: #2563eb;
 }
 
-/* =====================
-   PRIMARY BUTTON
-===================== */
 .primary-btn {
   width: 100%;
   margin-top: 25px;
@@ -463,15 +410,13 @@ body.booking-page {
   transform: translateY(-2px);
 }
 
-/* =====================
-   MOBILE
-===================== */
+
 @media (max-width: 500px) {
   .guest-card {
     grid-template-columns: 1fr;
   }
 }
-/* ===== DELETE BUTTON ===== */
+
 .danger-btn {
   margin-top: 15px;
   padding: 10px;
@@ -488,7 +433,7 @@ body.booking-page {
 .danger-btn:hover {
   transform: translateY(-2px);
 }
-/* ===== MY BOOKINGS BUTTON ===== */
+
 .my-bookings-link {
   text-align: center;
   margin-top: 20px;
@@ -509,9 +454,7 @@ body.booking-page {
   background: #2563eb;
   color: white;
 }
-/* =====================
-   PREMIUM TOP BAR
-===================== */
+
 .top-bar {
   position: fixed;
   top: 0;
@@ -557,9 +500,7 @@ body.booking-page {
   cursor: pointer;
 }
 
-/* =====================
-   HERO SECTION
-===================== */
+
 .hero-premium {
   min-height: 100vh;
   padding-top: 140px;
@@ -585,9 +526,7 @@ body.booking-page {
   margin-bottom: 50px;
 }
 
-/* =====================
-   PREMIUM SEARCH CARD
-===================== */
+
 .search-premium {
   width: 90%;
   max-width: 1000px;
@@ -613,9 +552,7 @@ body.booking-page {
   font-size: 15px;
 }
 
-/* =====================
-   PRIMARY CTA
-===================== */
+
 .primary-cta {
   background: linear-gradient(135deg, #2563eb, #1e40af);
   color: white;
@@ -632,9 +569,7 @@ body.booking-page {
   transform: translateY(-2px);
 }
 
-/* =====================
-   MOBILE
-===================== */
+
 @media (max-width: 700px) {
   .hero-text h1 {
     font-size: 34px;
